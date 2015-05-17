@@ -14,3 +14,4 @@ main = do
     putStrLn $ show $ remdups "aaaabccaadeeee"
     putStrLn $ show $ remdups' "aaaabccaadeeee"
     putStrLn $ show $ pack "aaaabccaadeeee"
+    putStrLn $ show $ encode $ pack "aaaabccaadeeee"

@@ -87,6 +87,7 @@ remdups' l  = foldr fn [] l
         | otherwise  =  y:ls
 
 pack :: (Eq a) => [a] -> [[a]]
+--Takes a list and packs identical elements together
 pack [] = []
 pack l = foldr fn [[]] l
   where
@@ -94,6 +95,10 @@ pack l = foldr fn [[]] l
     fn x (n@(y':_):ys)
         | x == y' = (x:n):ys
         | otherwise = [x]:n:ys
+
+encode :: [[a]] -> [(Int, a)]
+--Run length encoding of a list
+encode l = map (\l'@(x:_) -> (length l', x)) l
 
 
 
