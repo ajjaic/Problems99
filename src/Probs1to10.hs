@@ -41,7 +41,7 @@ frev :: [a] -> [a]
 --Reverses a list using `foldl`
 frev l = foldl (\acc x -> x:acc) [] l
 
-ispalin :: (Eq a) => [a] -> Bool
+ispalin :: Eq a => [a] -> Bool
 --Checks to see if a list is a palindrome or not
 ispalin l = l == (frev l)
 
@@ -66,7 +66,7 @@ flatten (List l) = foldr fn [] l
   where
     fn nl acc = mappend (flatten nl) acc
 
-remdups :: (Eq a) => [a] -> [a]
+remdups :: Eq a => [a] -> [a]
 --Remove duplicates using explicit recursion
 remdups []     = []
 remdups (x:xs) = x:(fn xs x)
@@ -76,7 +76,7 @@ remdups (x:xs) = x:(fn xs x)
         | y == y'    =  fn ys y
         | otherwise  =  y:(fn ys y)
 
-remdups' :: (Eq a) => [a] -> [a]
+remdups' :: Eq a => [a] -> [a]
 --Remove duplicates using a right fold
 remdups' [] = []
 remdups' l  = foldr fn [] l
@@ -86,15 +86,17 @@ remdups' l  = foldr fn [] l
         | y == y'    =  ls
         | otherwise  =  y:ls
 
-pack :: (Eq a) => [a] -> [[a]]
+pack :: Eq a => [a] -> [[a]]
 --Takes a list and packs identical elements together
 pack [] = []
 pack l = foldr fn [[]] l
   where
     fn x ([]:[]) = [[x]]
     fn x (n@(y':_):ys)
-        | x == y' = (x:n):ys
-        | otherwise = [x]:n:ys
+        | x == y'    =  (x:n):ys
+        | otherwise  =  [x]:n:ys
+    fn _ []             = error "This case never triggers"
+    fn _ ([] : (_ : _)) = error "This case never triggers"
 
 encode :: [[a]] -> [(Int, a)]
 --Run length encoding of a list
