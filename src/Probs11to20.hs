@@ -47,5 +47,39 @@ dropnth l n = map fst
             $ filter (not . (==n) . snd)
             $ zip l (mconcat $ repeat [1..n])
 
+type Splitlength = Int
+splitlist :: [a] -> Splitlength -> ([a], [a])
+splitlist l n = (take n l, drop n l)
+
+type Index = Int
+mslice :: [a] -> Index -> Index -> Maybe [a]
+mslice l s e
+    | (null l) || (s > e) = Nothing
+    | otherwise           = (Just . take (e-s+1) . drop (s-1)) l
+
+mrotate :: [a] -> Int -> [a]
+mrotate l n
+    | n > 0 = uncurry (flip (++)) (splitlist l n)
+    | otherwise = uncurry (flip (++)) (splitlist l ((length l) + n))
+
+
+dropkth :: [a] -> Int -> (a, [a])
+dropkth [] _ = (Nothing, [])
+dropkth l n = head $ drop (n-1) l
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
