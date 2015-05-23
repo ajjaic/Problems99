@@ -1,5 +1,6 @@
 import Probs1to10
 import Probs11to20
+import Probs21to30
 
 main :: IO ()
 main = do
