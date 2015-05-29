@@ -20,3 +20,5 @@ main = do
 
     putStrLn $ show $ encodemodified "aaaabccaadeeee"
     putStrLn $ show $ decodemodified [Multiple 4 'a',Single 'b',Multiple 2 'c', Multiple 2 'a',Single 'd',Multiple 4 'e']
+
+    putStrLn $ show $ insertat "chandra" 'M' 3
