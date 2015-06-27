@@ -1,7 +1,7 @@
 module Probs21to30 where
 
 import System.Random
-import Data.List (sortBy, groupBy)
+import Data.List (sortBy, groupBy, (\\))
 
 insertat :: [a] -> a -> Int -> [a]
 --Inserts an element at a specific index in
@@ -48,15 +48,23 @@ isLeapYear y = (isdiv 400) || ((isdiv 4) && (not $ isdiv 100))
     isdiv x = (y `mod` x) == 0
 
 perms :: [a] -> [[a]]
+--Permutation of a list
 perms [] = []
 perms [x] = [[x]]
 perms l@(x:xs) = concat $ map (fn p) [1 ..(length l)]
   where
-    {-fn :: [[a]] -> Int -> [[a]]-}
     p = perms xs
     fn ys n = map (\y -> insertat y x n) ys
 
 
+perms' :: Eq a => [a] -> [[a]]
+--Another way to write the permutation of a list
+perms' []  = []
+perms' [x] = [[x]]
+perms' l   = do
+    x  <- l
+    ys <- perms' (l\\[x])
+    return (x:ys)
 
 sortByListLen :: [[a]] -> [[a]]
 --Given a list of lists, sort the list based on the length of the
@@ -74,6 +82,32 @@ sortByFrequency ls = concat
                     $ sortByListLen ls
     where
         fn a b = (length a) == (length b)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
