@@ -66,6 +66,14 @@ perms' l   = do
     ys <- perms' (l\\[x])
     return (x:ys)
 
+nodoperm :: Eq a => [a] -> [[a]]
+--Desugared version of the above permutation function
+nodoperm [] = []
+nodoperm [x] = [[x]]
+nodoperm l = l
+         >>= (\x -> nodoperm (l \\ [x])
+         >>= (\ys -> return $ x:ys))
+
 sortByListLen :: [[a]] -> [[a]]
 --Given a list of lists, sort the list based on the length of the
 --sublists. Smaller lists in the front with the longer lists at the
@@ -84,12 +92,8 @@ sortByFrequency ls = concat
         fn a b = (length a) == (length b)
 
 
-
-
-
-
-
-
+demo :: (Integral a, Monad m) => m a -> m Bool
+demo l = l >>= return . even
 
 
 
